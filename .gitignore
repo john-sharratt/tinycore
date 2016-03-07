@@ -1,5 +1,6 @@
 base.iso
 base.iso.d
+base.iso.boot
 core.gz
 core.gz.d
 packages.d
