@@ -4,7 +4,7 @@
 . ./make-base.sh
 
 # Copy the core to transfer iso
-touch core.gz.d/TEST.TEST
+cp -r transfer.scripts/* core.gz.d/opt
 
 # Create the ISO
 . ./make-iso.sh

@@ -1,6 +1,9 @@
 base.iso
 base.iso.d
 base.iso.boot
+tc.iso
+tc.iso.d
 core.gz
 core.gz.d
 packages.d
+blueprints
