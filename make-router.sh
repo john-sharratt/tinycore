@@ -43,11 +43,12 @@ do
 done
 cd $RUNDIR
 
-# Emit the DNS entries
-
-
 # Emit the startup script
+echo "sudo /sbin/basic-firewall" >> core.gz.d/opt/bootlocal.sh
+echo "echo 1 > /proc/sys/net/ipv4/ip_forward" >> core.gz.d/opt/bootlocal.sh
 echo "sudo /sbin/dhcpcd" >> core.gz.d/opt/bootlocal.sh
+echo "sudo /sbin/dnsmasq" >> core.gz.d/opt/bootlocal.sh
+echo "sudo /sbin/nginx -c /etc/nginx.conf" >> core.gz.d/opt/bootlocal.sh
 
 # Create the ISO
 . ./make-iso.sh
