@@ -34,6 +34,9 @@ cd ..
 
 # Download all the packages we need
 mkdir -p packages.d
+if [ ! -f "packages.d/pcre.tcz" ]; then
+  wget -v $TC/tcz/pcre.tcz -O packages.d/pcre.tcz
+fi
 if [ ! -f "packages.d/nginx.tcz" ]; then
   wget -v $TC/tcz/nginx.tcz -O packages.d/nginx.tcz
 fi
@@ -48,6 +51,11 @@ if [ ! -f "packages.d/dnsmasq.tcz" ]; then
 fi
 
 # Extract all the packages
+if [ ! -d "packages.d/pcre.d" ]; then
+  unsquashfs -f packages.d/pcre.tcz
+  mv squashfs-root packages.d/pcre.d
+fi
+
 if [ ! -d "packages.d/nginx.d" ]; then
   unsquashfs -f packages.d/nginx.tcz
   mv squashfs-root packages.d/nginx.d
