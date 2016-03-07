@@ -22,7 +22,7 @@ do
     vm1=$(echo "$vm" | sed 's|/||g')
 
     # Emit all the DHCP configuration
-    CFG=$RUNDIR/core.gz.d/etc/dhcpcd.conf
+    CFG=$RUNDIR/core.gz.d/usr/local/etc/dhcpcd.conf
     MAPS=$(cat $vm1/ip.map.list)
     for MAP in $MAPS
     do
@@ -44,11 +44,12 @@ done
 cd $RUNDIR
 
 # Emit the startup script
-echo "sudo /sbin/basic-firewall" >> core.gz.d/opt/bootlocal.sh
-echo "echo 1 > /proc/sys/net/ipv4/ip_forward" >> core.gz.d/opt/bootlocal.sh
-echo "sudo /sbin/dhcpcd" >> core.gz.d/opt/bootlocal.sh
-echo "sudo /sbin/dnsmasq" >> core.gz.d/opt/bootlocal.sh
-echo "sudo /sbin/nginx -c /etc/nginx.conf" >> core.gz.d/opt/bootlocal.sh
+BOOT="core.gz.d/opt/bootlocal.sh"
+echo "sudo /usr/local/sbin/basic-firewall" >> $BOOT
+echo "echo 1 > /proc/sys/net/ipv4/ip_forward" >> $BOOT
+echo "sudo /usr/local/sbin/dhcpcd" >> $BOOT
+echo "sudo /usr/local/sbin/dnsmasq" >> $BOOT
+echo "sudo /usr/local/sbin/nginx -c /etc/nginx.conf" >> $BOOT
 
 # Create the ISO
 . ./make-iso.sh

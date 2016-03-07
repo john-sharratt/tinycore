@@ -50,24 +50,20 @@ fi
 # Extract all the packages
 if [ ! -d "packages.d/nginx.d" ]; then
   unsquashfs -f packages.d/nginx.tcz
-  mv squashfs-root/usr/local packages.d/nginx.d
-  rm -r squashfs-root
+  mv squashfs-root packages.d/nginx.d
 fi
 
 if [ ! -d "packages.d/iptables.d" ]; then
   unsquashfs -f packages.d/iptables.tcz
-  mv squashfs-root/usr/local packages.d/iptables.d
-  rm -r squashfs-root
+  mv squashfs-root packages.d/iptables.d
 fi
 
 if [ ! -d "packages.d/dhcpcd.d" ]; then
   unsquashfs -f packages.d/dhcpcd.tcz
-  mv squashfs-root/usr/local packages.d/dhcpcd.d
-  rm -r squashfs-root
+  mv squashfs-root packages.d/dhcpcd.d
 fi
 
 if [ ! -d "packages.d/dnsmasq.d" ]; then
   unsquashfs -f packages.d/dnsmasq.tcz
-  mv squashfs-root/usr/local packages.d/dnsmasq.d
-  rm -r squashfs-root
+  mv squashfs-root packages.d/dnsmasq.d
 fi
