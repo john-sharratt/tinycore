@@ -6,11 +6,19 @@ RUNDIR=$(pwd)
 . ./make-base.sh
 
 # Copy the core to transfer iso
-cp -r packages.d/nginx.d/* core.gz.d
+cp -r packages.d/openssl.d/* core.gz.d
 cp -r packages.d/pcre.d/* core.gz.d
+cp -r packages.d/nginx.d/* core.gz.d
 cp -r packages.d/iptables.d/* core.gz.d
 cp -r packages.d/dhcpcd.d/* core.gz.d
 cp -r packages.d/dnsmasq.d/* core.gz.d
+
+# Reset the DHCP configuration
+CFG=$RUNDIR/core.gz.d/usr/local/etc/dhcpcd.conf
+if [ -f "core.gz.d/usr/local/etc/dhcpcd.conf" ]; then
+  rm core.gz.d/usr/local/etc/dhcpcd.conf
+fi
+echo "subnet 0.0.0.0 netmask 0.0.0.0 {" >> $CFG
 
 # Loop through all the systems and VM's
 cd blueprints/bank.md.d/systems/
@@ -23,9 +31,6 @@ do
     vm1=$(echo "$vm" | sed 's|/||g')
 
     # Emit all the DHCP configuration
-    CFG=$RUNDIR/core.gz.d/usr/local/etc/dhcpcd.conf
-    echo "" >> $CFG
-    echo "group {" >> $CFG
     MAPS=$(cat $vm1/ip.map.list)
     for MAP in $MAPS
     do
@@ -34,18 +39,18 @@ do
       IP=$(echo "$MAP" | cut -d "|" -f3)
       ROUTER=$(cat $vm1/ip.router)
       echo "  host $HOST.$vm1.$system1 {" >> $CFG
-      echo "    hardware ethernet $MAC;" >> $CFG
-      echo "    fixed-address $IP;" >> $CFG
-      echo "    domain-name-servers $ROUTER;" >> $CFG
-      echo "    domain-search \"$vm1.$system1\";" >> $CFG
-      echo "    option routers $ROUTER;" >> $CFG
+      echo "    hardware ethernet $MAC" >> $CFG
+      echo "    fixed-address $IP" >> $CFG
+      echo "    domain-name-servers $ROUTER" >> $CFG
+      echo "    domain-search \"$vm1.$system1\"" >> $CFG
+      echo "    option routers $ROUTER" >> $CFG
       echo "  }" >> $CFG
     done
-    echo "}" >> $CFG
   done
  cd ../..
 done
 cd $RUNDIR
+echo "}" >> $CFG
 
 # Emit the startup script
 BOOT="core.gz.d/opt/bootlocal.sh"
