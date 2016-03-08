@@ -18,7 +18,7 @@ CFG=$RUNDIR/core.gz.d/usr/local/etc/dhcpcd.conf
 if [ -f "core.gz.d/usr/local/etc/dhcpcd.conf" ]; then
   rm core.gz.d/usr/local/etc/dhcpcd.conf
 fi
-echo "subnet 10.0.0.0 netmask 255.0.0.0" >> $CFG
+echo "group" >> $CFG
 echo "{" >> $CFG
 
 # Loop through all the systems and VM's
@@ -39,13 +39,14 @@ do
       HOST=$(echo "$MAP" | cut -d "|" -f2)
       IP=$(echo "$MAP" | cut -d "|" -f3)
       ROUTER=$(cat $vm1/ip.router)
-      echo "  host $HOST_$vm1_$system1" >> $CFG
+      echo "  host ${HOST}.${vm1}.${system1}" >> $CFG
       echo "  {" >> $CFG
       echo "    hardware ethernet $MAC;" >> $CFG
       echo "    fixed-address $IP;" >> $CFG
-      echo "    domain-name-servers $ROUTER;" >> $CFG
-      echo "    domain-search \"$vm1.$system1\";" >> $CFG
-      echo "    option routers $ROUTER;" >> $CFG
+#      echo "    option domain-name-servers $ROUTER;" >> $CFG
+#      echo "    option domain-search \"$vm1.$system1\";" >> $CFG
+#      echo "    option host-name \"${HOST}.${vm1}.${system1}\";" >> $CFG
+#      echo "    option routers $ROUTER;" >> $CFG
       echo "  }" >> $CFG
     done
   done
