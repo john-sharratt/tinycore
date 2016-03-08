@@ -46,8 +46,8 @@ fi
 if [ ! -f "packages.d/iptables.tcz" ]; then
   wget -v $TC/tcz/iptables.tcz -O packages.d/iptables.tcz
 fi
-if [ ! -f "packages.d/dhcpcd.tcz" ]; then
-  wget -v $TC/tcz/dhcpcd.tcz -O packages.d/dhcpcd.tcz
+if [ ! -f "packages.d/dhcp.tcz" ]; then
+  wget -v $TC/tcz/dhcp.tcz -O packages.d/dhcp.tcz
 fi
 if [ ! -f "packages.d/dnsmasq.tcz" ]; then
   wget -v $TC/tcz/dnsmasq.tcz -O packages.d/dnsmasq.tcz
@@ -74,9 +74,9 @@ if [ ! -d "packages.d/iptables.d" ]; then
   mv squashfs-root packages.d/iptables.d
 fi
 
-if [ ! -d "packages.d/dhcpcd.d" ]; then
-  unsquashfs -f packages.d/dhcpcd.tcz
-  mv squashfs-root packages.d/dhcpcd.d
+if [ ! -d "packages.d/dhcp.d" ]; then
+  unsquashfs -f packages.d/dhcp.tcz
+  mv squashfs-root packages.d/dhcp.d
 fi
 
 if [ ! -d "packages.d/dnsmasq.d" ]; then
